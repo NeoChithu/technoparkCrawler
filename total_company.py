@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-import urllib2, sys
+import urllib2, sys, ssl
 import mysql.connector
 from datetime import datetime
 
@@ -11,8 +11,10 @@ for i in range(245, 250):
     # url = 'http://www.technopark.org/company-details?id=10364'
     header = {'User-Agent': 'Mozilla/5.0'} 
     req = urllib2.Request(url,headers=header)
-    page = urllib2.urlopen(req)
-    soup = BeautifulSoup(page, 'html.parser')
+    # page = urllib2.urlopen(req)
+    gcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+    info = urllib2.urlopen(req, context=gcontext).read()    
+    soup = BeautifulSoup(info, 'html.parser')
 
     try:
         total_data = soup.find_all("div", {"class":"col-sm-4"})[0]

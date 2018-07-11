@@ -4,7 +4,7 @@ import mysql.connector
 from datetime import datetime
 
 # Database Connection Related Imports
-import sys
+import sys, ssl
 sys.path.insert(0, sys.path[0]+'\\database')
 from connection import Database
 # Creating a Connection
@@ -16,8 +16,10 @@ def job_details(url):
     # print url
     header = {'User-Agent': 'Mozilla/5.0'} 
     req = urllib2.Request(url,headers=header)
-    page = urllib2.urlopen(req)
-    soup = BeautifulSoup(page, 'html.parser')
+    # page = urllib2.urlopen(req)
+    gcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+    info = urllib2.urlopen(req, context=gcontext).read()    
+    soup = BeautifulSoup(info, 'html.parser')
     total_data = soup.find_all("div", {"class":"det-text group-effect1 arrived"})[0]
     data = total_data.find_all("a", href= True)
 
