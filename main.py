@@ -17,7 +17,6 @@ sys.path.insert(0, sys.path[0]+'\\database')
 from connection import Database
 
 import ssl
-
 # Creating a Connection
 new_instance = Database()
 cnx = new_instance.database_connector()
@@ -27,6 +26,7 @@ def insert_date():
 
     # add_data("http://www.technopark.org/company-details?id=9548")
     # sys.exit()
+
     domain_name = "http://www.technopark.org"
     url = "http://technopark.org/job-search"
     header = {'User-Agent': 'Mozilla/5.0'} 
@@ -35,7 +35,7 @@ def insert_date():
     info = urllib2.urlopen(req, context=gcontext).read()
     soup = BeautifulSoup(info, 'html.parser')
     # print soup
-    table_data = soup.find_all("tr", {"class":"companyList"})    
+    table_data = soup.find_all("tr", {"class":"companyList"}) 
     
     count = company_count = 0
 
